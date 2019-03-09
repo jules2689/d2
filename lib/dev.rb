@@ -19,7 +19,6 @@ module Dev
   autoload(:Commands,   'dev/commands')
 
   autocall(:Config)  { CLI::Kit::Config.new(tool_name: TOOL_NAME) }
-  autocall(:Command) { CLI::Kit::BaseCommand }
 
   autocall(:Executor) { CLI::Kit::Executor.new(log_file: LOG_FILE) }
   autocall(:Resolver) do
@@ -60,9 +59,17 @@ module Dev
   # Use +Dev::FILE_DESCRIPTOR.write("cd blah")+ to add to the file descriptor for evaluation in the parent.
   FILE_DESCRIPTOR = FileDescriptor.new
 
+  module Utils
+    autoload :FirstRun,  'dev/utils/first_run'
+    autoload :Formatter, 'dev/utils/formatter'
+  end
+
   module Helpers
-    autoload :FirstRun, 'dev/helpers/first_run'
-    autoload :Fzy,      'dev/helpers/fzy'
-    autoload :Git,      'dev/helpers/git'
+    autoload :Fzy,       'dev/helpers/fzy'
+    autoload :Git,       'dev/helpers/git'
+  end
+
+  class Command < CLI::Kit::BaseCommand
+    include Dev::Utils::Formatter
   end
 end

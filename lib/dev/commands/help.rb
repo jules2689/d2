@@ -4,16 +4,16 @@ module Dev
   module Commands
     class Help < Dev::Command
       def call(args, _name)
-        puts CLI::UI.fmt("{{bold:Available commands}}")
-        puts ""
+        logger.info "{{bold:Available commands}}"
+        logger.info ""
 
         Dev::Commands::Registry.resolved_commands.each do |name, klass|
           next if name == 'help'
-          puts CLI::UI.fmt("{{command:#{Dev::TOOL_NAME} #{name}}}")
+          logger.info "{{command:#{Dev::TOOL_NAME} #{name}}}"
           if help = klass.help
-            puts CLI::UI.fmt(help)
+            logger.info help
           end
-          puts ""
+          logger.info ""
         end
       end
     end

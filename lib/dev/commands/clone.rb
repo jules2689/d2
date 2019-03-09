@@ -11,8 +11,8 @@ module Dev
           FileUtils.mkdir_p(File.dirname(git_repo.path_on_disk))
 
           url = git_repo.url(type: 'ssh')
-          puts "Cloning #{url}"
-          system("git clone #{url} #{git_repo.path_on_disk}")
+          logger.info "Cloning #{url}"
+          CLI::Kit::System.system("git clone #{url} #{git_repo.path_on_disk}")
         end
 
         Dev::FILE_DESCRIPTOR.write("cd #{git_repo.path_on_disk}")

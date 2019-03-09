@@ -1,7 +1,7 @@
 require 'test_helper'
 
 module Dev
-  module Helpers
+  module Utils
     class FirstRunTest < MiniTest::Test
       include CLI::Kit::Support::TestHelper
       include FakeConfig
@@ -13,7 +13,7 @@ module Dev
         ).returns('github.com')
         Dev::Config.set('git', 'default_owner', 'default_owner')
         Dev::Config.set('src_path', 'default', '~/src')
-        Dev::Helpers::FirstRun.call
+        Dev::Utils::FirstRun.call
         assert_equal 'github.com', Dev::Config.get('git', 'default_provider')
       end
 
@@ -27,7 +27,7 @@ module Dev
         ).returns('mydomain.com')
         Dev::Config.set('git', 'default_owner', 'default_owner')
         Dev::Config.set('src_path', 'default', '~/src')
-        Dev::Helpers::FirstRun.call
+        Dev::Utils::FirstRun.call
         assert_equal 'mydomain.com', Dev::Config.get('git', 'default_provider')
       end
 
@@ -37,7 +37,7 @@ module Dev
           .returns('owner')
         Dev::Config.set('git', 'default_provider', 'default_provider')
         Dev::Config.set('src_path', 'default', '~/src')
-        Dev::Helpers::FirstRun.call
+        Dev::Utils::FirstRun.call
         assert_equal 'owner', Dev::Config.get('git', 'default_owner')
       end
 
@@ -53,7 +53,7 @@ module Dev
 
         Dev::Config.set('src_path', 'default', '~/src')
 
-        Dev::Helpers::FirstRun.call
+        Dev::Utils::FirstRun.call
 
         assert_equal 'github.com', Dev::Config.get('git', 'default_provider')
         assert_equal 'owner', Dev::Config.get('git', 'default_owner')
@@ -70,14 +70,14 @@ module Dev
             default: '~/src'
           ).returns('~/src')
 
-        Dev::Helpers::FirstRun.call
+        Dev::Utils::FirstRun.call
       end
 
       def test_first_run_with_all_options
         Dev::Config.set('git', 'default_provider', 'default_provider')
         Dev::Config.set('git', 'default_owner', 'default_owner')
         Dev::Config.set('src_path', 'default', '~/src')
-        Dev::Helpers::FirstRun.call
+        Dev::Utils::FirstRun.call
       end
     end
   end

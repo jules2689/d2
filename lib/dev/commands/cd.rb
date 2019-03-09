@@ -16,7 +16,7 @@ module Dev
         )
 
         if options.empty?
-          puts "Nothing found for #{args.first}"
+          logger.info "Nothing found for #{args.first}"
         else
           path = File.join(base_path, options.first)
           Dev::FILE_DESCRIPTOR.write("cd #{path}")

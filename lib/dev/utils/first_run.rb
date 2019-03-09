@@ -1,6 +1,8 @@
 module Dev
-  module Helpers
-    module FirstRun
+  module Utils
+    class FirstRun
+      include Dev::Utils::Formatter
+
       class << self
         # Runs or No-Ops on a series of first-run checks
         # This makes sure that the system is configured as expected
@@ -16,7 +18,7 @@ module Dev
           git_section = Dev::Config.get_section('git')
           return if git_section['default_provider'] && git_section['default_owner']
 
-          CLI::UI::Frame.open('Git Integration', timing: false) do
+          logger.with_frame('Git Integration', timing: false) do
             if git_section['default_provider'].nil?
               default_provider = CLI::UI.ask(
                 'What is the most common git provider you use?',
@@ -44,13 +46,13 @@ module Dev
         def src_path
           return if Dev::Config.get('src_path', 'default')
 
-          CLI::UI::Frame.open('Code Source Path', timing: false) do
-            puts CLI::UI.fmt "Code will be cloned to the source path you specify here."
-            puts CLI::UI.fmt "Inside the folder, code will obey a simple heuristic:"
-            puts CLI::UI.fmt "  {{info:path/to/src_path}}/{{info:provider}}/{{info:owner}}/{{info:repo_name}}"
-            puts CLI::UI.fmt "For example, https://github.com/user/repo would clone to:"
-            puts CLI::UI.fmt "  {{info:path/to/src_path}}/{{info:github.com}}/{{info:user}}/{{info:repo}}"
-            puts CLI::UI.fmt ""
+          logger.with_frame('Code Source Path', timing: false) do
+            logger.info "Code will be cloned to the source path you specify here."
+            logger.info "Inside the folder, code will obey a simple heuristic:"
+            logger.info "  {{info:path/to/src_path}}/{{info:provider}}/{{info:owner}}/{{info:repo_name}}"
+            logger.info "For example, https://github.com/user/repo would clone to:"
+            logger.info "  {{info:path/to/src_path}}/{{info:github.com}}/{{info:user}}/{{info:repo}}"
+            logger.info ""
 
             src_path = nil
             while src_path.nil? || !File.directory?(File.expand_path(src_path))

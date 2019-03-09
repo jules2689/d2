@@ -14,6 +14,8 @@ require 'minitest/autorun'
 require "minitest/unit"
 require 'mocha/minitest'
 
+ENV['ENVIRONMENT'] = 'test'
+
 module FakeConfig
   def setup
     super
