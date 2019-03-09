@@ -3,7 +3,7 @@ require 'uri'
 module Dev
   module Helpers
     module Git
-      class Url
+      class LocalRepo
         TYPES = {
           ssh: 'ssh',
           https: 'https',
@@ -73,6 +73,17 @@ module Dev
           else
             raise ArgumentError, "#{type} is not a supported type"
           end
+        end
+
+        def path_on_disk
+          File.expand_path(
+            File.join(
+              Dev::Config.get('src_path', 'default'),
+              provider,
+              org_or_user,
+              repo_name
+            )
+          )
         end
 
         private

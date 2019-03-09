@@ -1,7 +1,7 @@
 module Dev
   module Helpers
     module Git
-      autoload :Url, 'dev/helpers/git/url'
+      autoload :LocalRepo, 'dev/helpers/git/local_repo'
 
       # Returns a hash representation of the current git config
       #

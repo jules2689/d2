@@ -5,16 +5,13 @@ module Dev
   module Commands
     class Cd < Dev::Command
       def call(args, _name)
-        url = Dev::Helpers::Git::Url.new(args.shift)
-        query = File.join(url.org_or_user, url.repo_name)
-
-        # This find command will enumerate the ~/src directory for all repos
-        # Assumes ~/src/PROVIDER.com/OWNER/REPO
+        # This find command will enumerate the src_path directory for all repos
+        # Assumes src_path/PROVIDER.com/OWNER/REPO
         # Will return all `REPO` entries relative to the src path
-        base_path = File.expand_path('~/src')
+        base_path = File.expand_path(Dev::Config.get('src_path', 'default'))
         options = Dev::Helpers::Fzy.fuzzy_match(
           "find #{base_path}/*/* -type d -maxdepth 1 -mindepth 1 | sed -n 's|^#{base_path}||p'",
-          query: query,
+          query: args.shift,
           num_matches: 1
         )
 
