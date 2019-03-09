@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby --disable-gems
+
+require_relative 'load_dev'
+
+exit(Dev::ErrorHandler.call do
+  Dev::EntryPoint.call(ARGV.dup)
+end)
