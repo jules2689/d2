@@ -14,6 +14,7 @@ module Dev
 
     register :Cd,      'cd',      'dev/commands/cd'
     register :Clone,   'clone',   'dev/commands/clone'
+    register :Config,  'config',  'dev/commands/config'
     register :Help,    'help',    'dev/commands/help'
   end
 end

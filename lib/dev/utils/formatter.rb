@@ -8,7 +8,7 @@ module Dev
       end
 
       def logger
-        ClassMethods.logger
+        Dev::Utils::Formatter::SimpleFormatter
       end
 
       def self.included(base)
