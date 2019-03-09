@@ -6,8 +6,13 @@ CLI::UI::StdoutRouter.enable
 module Dev
   extend CLI::Kit::Autocall
 
+  # The name of the tool
   TOOL_NAME = 'dev'
+
+  # The root directory of the tool
   ROOT      = File.expand_path('../..', __FILE__)
+
+  # The file path where the log exists
   LOG_FILE  = '/tmp/dev.log'
 
   autoload(:EntryPoint, 'dev/entry_point')
@@ -32,8 +37,14 @@ module Dev
   end
 
   class FileDescriptor
+    # Path to the file descriptor. Set in Entrypoint
+    # @private
     attr_accessor :path
 
+    # Write out to the file descriptor to interact with the parent process (shell)
+    #
+    # @param [String] cmd to execute in the parent environment
+    #
     def write(cmd)
       fd = IO.sysopen(@path, 'w')
       io = IO.new(fd)
@@ -41,6 +52,12 @@ module Dev
       io.close
     end
   end
+
+  # The file descriptor object used to interact with the OS file descriptor 9
+  # This is used by the Ruby process (child) to communicate with the parent process (shell).
+  # On finalization of the shell function, the file descriptor is used to manipulate the
+  # parent environment.
+  # Use +Dev::FILE_DESCRIPTOR.write("cd blah")+ to add to the file descriptor for evaluation in the parent.
   FILE_DESCRIPTOR = FileDescriptor.new
 
   module Helpers

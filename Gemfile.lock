@@ -5,6 +5,7 @@ GEM
     minitest (5.11.3)
     mocha (1.8.0)
       metaclass (~> 0.0.1)
+    yard (0.9.18)
 
 PLATFORMS
   ruby
@@ -12,6 +13,7 @@ PLATFORMS
 DEPENDENCIES
   minitest
   mocha
+  yard
 
 BUNDLED WITH
    2.0.1

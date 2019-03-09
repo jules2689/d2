@@ -9,13 +9,10 @@ module Dev
       # Fuzzy matches the output of a command against a query.
       # Returns n matches of output, defaulting to 1
       #
-      # = Params
-      # @param String Command to run
-      # @param String Query to fuzzy match against
-      # @param Integer number of matches to return (Default 1)
-      #
-      # = Returns
-      # @return Array all possible matches
+      # @param [String]  cmd Command to run
+      # @param [String]  query Query to fuzzy match against
+      # @param [Integer] num_matches number of matches to return (Default 1)
+      # @return [Array] all possible matches
       #
       def self.fuzzy_match(cmd, query:, num_matches: 1)
         lines = num_matches > 3 ? num_matches : 3 # Min lines is 3 in fzy

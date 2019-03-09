@@ -22,8 +22,7 @@ module Dev
         # This will usually be one of: github.com, bitbucket.org, or gitlab.com
         # Defaults to the default provider set in the config in the case none is specified
         #
-        # == Returns
-        # @return String the provider (host) for the repo
+        # @return [String] the provider (host) for the repo
         #
         def provider
           case fragement_type
@@ -39,8 +38,7 @@ module Dev
         # The organization or user that owns the repo
         # Defaults to DEFAULT_ORG_OR_USER in the case none is specified
         #
-        # == Returns
-        # @return String the organization or user
+        # @return [String] the organization or user
         #
         def org_or_user
           split_path = path.split('/', 2)
@@ -54,8 +52,7 @@ module Dev
 
         # The repository name
         #
-        # == Returns
-        # @return String the repo name
+        # @return [String] the repo name
         #
         def repo_name
           path.split('/', 2).last
@@ -63,14 +60,9 @@ module Dev
 
         # Provides a full git URL in SSH or HTTPS format
         #
-        # == Params
-        # @param type [ssh, https] The type of the url required
-        #
-        # == Returns
-        # @return String url representing the repo in the requested format
-        #
-        # == Raises
-        # @raise ArgumentError when type is not supported
+        # @param [String] type (ssh or https) The type of the url required
+        # @return [String] url representing the repo in the requested format
+        # @raise [ArgumentError] when type is not supported
         #
         def url(type:)
           case type
@@ -81,19 +73,6 @@ module Dev
           else
             raise ArgumentError, "#{type} is not a supported type"
           end
-        end
-
-        def inspect
-          [
-            "Class: #{self}",
-            "fragment [#{@fragment}]",
-            "provider [#{provider}]",
-            "path [#{path}]",
-            "org_or_user [#{org_or_user}]",
-            "repo_name [#{repo_name}]",
-            "ssh [#{url(type: 'ssh')}]",
-            "https [#{url(type: 'https')}]",
-          ].join(" || ")
         end
 
         private

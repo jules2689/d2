@@ -1,7 +1,8 @@
 require 'dev'
 
 module Dev
-  module EntryPoint
+  module EntryPoint # @private
+    # @private
     def self.call(args)
       # First argument is artificially changed to be the file descriptor in the shell function
       Dev::FILE_DESCRIPTOR.path = args.shift
