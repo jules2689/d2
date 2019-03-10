@@ -60,6 +60,7 @@ module Dev
       end
 
       def test_first_run_without_src_path
+        dir = Dir.mktmpdir
         Dev::Config.set('git', 'default_provider', 'default_provider')
         Dev::Config.set('git', 'default_owner', 'default_owner')
 
@@ -68,9 +69,11 @@ module Dev
             'Where do you want your code to clone to? (Must be a directory)',
             is_file: true,
             default: '~/src'
-          ).returns('~/src')
+          ).returns(dir)
 
         Dev::Utils::FirstRun.call
+      ensure
+        FileUtils.rm_rf(dir)
       end
 
       def test_first_run_with_all_options

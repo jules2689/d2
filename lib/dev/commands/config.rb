@@ -19,6 +19,8 @@ module Dev
         end
       end
 
+      private
+
       def set(args)
         section = args.shift
         key = nil
