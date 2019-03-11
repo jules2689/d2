@@ -1,4 +1,4 @@
-require_relative '../exe/load_dev'
+require_relative '../exe/load_d2'
 require 'cli/kit'
 
 require 'fileutils'
@@ -19,7 +19,7 @@ ENV['ENVIRONMENT'] = 'test'
 module FakeConfig
   def setup
     super
-    Dev::Config.instance_variable_set(:@ini, nil)
+    D2::Config.instance_variable_set(:@ini, nil)
     @original_config_home = ENV['XDG_CONFIG_HOME']
     ENV['XDG_CONFIG_HOME'] = Dir.mktmpdir
   end

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-module Dev
+module D2
   module Helpers
     class GitTest < MiniTest::Test
       include CLI::Kit::Support::TestHelper
@@ -20,7 +20,7 @@ module Dev
           'user.name' => 'Julian Nadeau',
           'user.email' => 'email@email.com',
           'gpg.program' => 'gpg',
-        }, Dev::Helpers::Git.config)
+        }, D2::Helpers::Git.config)
       end
     end
   end

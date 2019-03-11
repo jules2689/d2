@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby --disable-gems
+
+require_relative 'load_d2'
+
+exit(D2::ErrorHandler.call do
+  D2::EntryPoint.call(ARGV.dup)
+end)
