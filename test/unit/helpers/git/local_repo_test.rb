@@ -24,8 +24,28 @@ module D2
           assert_equal File.expand_path("~/src/github.com/jules2689/d2"), local_repo.path_on_disk
         end
 
+        def test_with_ssh_url_with_newline
+          local_repo = D2::Helpers::Git::LocalRepo.new("git@github.com:jules2689/d2.git\n")
+          assert_equal 'github.com', local_repo.provider
+          assert_equal 'jules2689', local_repo.org_or_user
+          assert_equal 'd2', local_repo.repo_name
+          assert_equal 'git@github.com:jules2689/d2.git', local_repo.url(type: 'ssh')
+          assert_equal 'https://github.com/jules2689/d2.git', local_repo.url(type: 'https')
+          assert_equal File.expand_path("~/src/github.com/jules2689/d2"), local_repo.path_on_disk
+        end
+
         def test_with_https_url
           local_repo = D2::Helpers::Git::LocalRepo.new('https://github.com/jules2689/d2.git')
+          assert_equal 'github.com', local_repo.provider
+          assert_equal 'jules2689', local_repo.org_or_user
+          assert_equal 'd2', local_repo.repo_name
+          assert_equal 'git@github.com:jules2689/d2.git', local_repo.url(type: 'ssh')
+          assert_equal 'https://github.com/jules2689/d2.git', local_repo.url(type: 'https')
+          assert_equal File.expand_path("~/src/github.com/jules2689/d2"), local_repo.path_on_disk
+        end
+
+        def test_with_https_url_with_newline
+          local_repo = D2::Helpers::Git::LocalRepo.new("https://github.com/jules2689/d2.git\n")
           assert_equal 'github.com', local_repo.provider
           assert_equal 'jules2689', local_repo.org_or_user
           assert_equal 'd2', local_repo.repo_name
@@ -61,6 +81,16 @@ module D2
           assert_equal 'd2', local_repo.repo_name
           assert_equal 'git@github.com:jules2689/d2.git', local_repo.url(type: 'ssh')
           assert_equal 'https://github.com/jules2689/d2.git', local_repo.url(type: 'https')
+          assert_equal File.expand_path('~/src/github.com/jules2689/d2'), local_repo.path_on_disk
+        end
+
+        def test_with_url_without_dot_git
+          local_repo = D2::Helpers::Git::LocalRepo.new('git@github.com:jules2689/d2')
+          assert_equal 'github.com', local_repo.provider
+          assert_equal 'jules2689', local_repo.org_or_user
+          assert_equal 'd2', local_repo.repo_name
+          assert_equal 'git@github.com:jules2689/d2', local_repo.url(type: 'ssh', with_dot_git: false)
+          assert_equal 'https://github.com/jules2689/d2', local_repo.url(type: 'https', with_dot_git: false)
           assert_equal File.expand_path('~/src/github.com/jules2689/d2'), local_repo.path_on_disk
         end
 

@@ -16,5 +16,6 @@ module D2
     register :Clone,   'clone',   'd2/commands/clone'
     register :Config,  'config',  'd2/commands/config'
     register :Help,    'help',    'd2/commands/help'
+    register :Open,    'open',    'd2/commands/open'
   end
 end

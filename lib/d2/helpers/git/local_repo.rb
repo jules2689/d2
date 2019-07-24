@@ -14,8 +14,16 @@ module D2
         private_constant :TYPES
         UndeterminedError = Class.new(StandardError)
 
-        def initialize(fragment)
-          @fragment = fragment.gsub(/\.git$/, '')
+        def self.current_branch
+          CLI::Kit::System.capture3("git branch | grep \\* | cut -d ' ' -f2")&.first&.chomp
+        end
+
+        def self.origin
+          CLI::Kit::System.capture3("git config --local remote.origin.url")&.first&.chomp
+        end
+
+        def initialize(fragment: LocalRepo.origin)
+          @fragment = fragment.gsub(/\.git$/, '').chomp
         end
 
         # The provider for the url, aka the git server
@@ -64,15 +72,17 @@ module D2
         # @return [String] url representing the repo in the requested format
         # @raise [ArgumentError] when type is not supported
         #
-        def url(type:)
-          case type
+        def url(type:, with_dot_git: true)
+          url = case type
           when 'ssh'
-            "git@#{provider}:#{org_or_user}/#{repo_name}.git"
+            "git@#{provider}:#{org_or_user}/#{repo_name}"
           when 'https'
-            "https://#{provider}/#{org_or_user}/#{repo_name}.git"
+            "https://#{provider}/#{org_or_user}/#{repo_name}"
           else
             raise ArgumentError, "#{type} is not a supported type"
           end
+          url = url + ".git" if with_dot_git
+          url
         end
 
         def path_on_disk
