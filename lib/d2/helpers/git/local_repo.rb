@@ -22,7 +22,7 @@ module D2
           CLI::Kit::System.capture3("git config --local remote.origin.url")&.first&.chomp
         end
 
-        def initialize(fragment: LocalRepo.origin)
+        def initialize(fragment = LocalRepo.origin)
           @fragment = fragment.gsub(/\.git$/, '').chomp
         end
 
