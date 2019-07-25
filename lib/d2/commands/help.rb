@@ -7,7 +7,12 @@ module D2
         logger.info "{{bold:Available commands}}"
         logger.info ""
 
-        D2::Commands::Registry.resolved_commands.each do |name, klass|
+        commands = D2::Commands::Registry.resolved_commands
+        if filter = args.shift
+          commands = commands.select { |k, _| k == filter }
+        end
+
+        commands.each do |name, klass|
           next if name == 'help'
           logger.info "{{command:#{D2::TOOL_NAME} #{name}}}"
           if help = klass.help

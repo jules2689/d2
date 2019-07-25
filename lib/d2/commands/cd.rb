@@ -33,6 +33,14 @@ module D2
       def self.help
         <<~EOF
           Change Directory to Repository. Uses Fuzzy Matching.
+
+          {{bold:Pro-tip:}}
+            Does the fuzzy matching not do what you want?
+            Run {{command:d2 config cd.[QUERY] [PATH]}}
+            This will make {{command:d2 cd [QUERY]}} go to {{info:[PATH]}},
+              just like you wanted.
+
+
           Usage: {{command:#{D2::TOOL_NAME} cd d2}}
         EOF
       end
