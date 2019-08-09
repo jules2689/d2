@@ -9,7 +9,7 @@ module D2
       end
 
       def call(args, _name)
-        env = ENV.dup
+        env = ENV.to_h.dup
         env['LOCAL_COMMAND_ARGS'] = args.join(' ') if args
 
         CLI::Kit::System.system(@params['run'], env: env) do |o, e|
