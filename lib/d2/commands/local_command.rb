@@ -24,11 +24,11 @@ module D2
               if o
                 o.split("{{divider}}").each_with_index do |section, idx|
                   CLI::UI::Frame.divider(nil) unless idx == 0
-                  logger.print CLI::UI.fmt section
+                  print CLI::UI.fmt section
                 end
               end
-              logger.print CLI::UI.fmt e if e
-              logger.print CLI::UI::Color::RESET.code
+              print CLI::UI.fmt e if e
+              print CLI::UI::Color::RESET.code
             end
           end
         end
