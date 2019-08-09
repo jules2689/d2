@@ -18,9 +18,9 @@ module D2
           FileUtils.chmod("+x", file.path)
 
           CLI::Kit::System.system(file.path, *args) do |o, e|
-            puts CLI::UI.fmt o if o
-            puts CLI::UI.fmt e if e
-            puts CLI::UI::Color::RESET.code
+            print CLI::UI.fmt o if o
+            print CLI::UI.fmt e if e
+            print CLI::UI::Color::RESET.code
           end
         end
       end
