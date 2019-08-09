@@ -9,13 +9,19 @@ module D2
       end
 
       def call(args, _name)
-        env = ENV.to_h.dup
-        env['LOCAL_COMMAND_ARGS'] = args.join(' ') if args
+        require 'tempfile'
+        require 'fileutils'
 
-        CLI::Kit::System.system(@params['run'], env: env) do |o, e|
-          puts CLI::UI.fmt o if o
-          puts CLI::UI.fmt e if e
-          puts CLI::UI::Color::RESET.code
+        Tempfile.create("#{@name}", Dir.pwd) do |file|
+          file.write(@params['run'])
+          file.rewind
+          FileUtils.chmod("+x", file.path)
+
+          CLI::Kit::System.system(file.path, *args) do |o, e|
+            puts CLI::UI.fmt o if o
+            puts CLI::UI.fmt e if e
+            puts CLI::UI::Color::RESET.code
+          end
         end
       end
 
