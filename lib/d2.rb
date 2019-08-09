@@ -10,13 +10,15 @@ module D2
   TOOL_NAME = 'd2'
 
   # The root directory of the tool
-  ROOT      = File.expand_path('../..', __FILE__)
+  ROOT = File.expand_path('../..', __FILE__)
 
   # The file path where the log exists
   LOG_FILE  = '/tmp/d2.log'
+  CONFIG_PATH = File.expand_path(File.join(ENV.fetch('XDG_CONFIG_HOME', '~/.config'), TOOL_NAME))
 
   autoload(:EntryPoint, 'd2/entry_point')
   autoload(:Commands,   'd2/commands')
+  autoload(:Registry,   'd2/registry')
 
   autocall(:Config)  { CLI::Kit::Config.new(tool_name: TOOL_NAME) }
 

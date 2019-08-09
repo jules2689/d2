@@ -2,15 +2,14 @@ require 'd2'
 
 module D2
   module Commands
-    Registry = CLI::Kit::CommandRegistry.new(
-      default: 'help',
-      contextual_resolver: nil
-    )
+    Registry = D2::Registry.new
 
     def self.register(const, cmd, path)
       autoload(const, path)
       Registry.add(->() { const_get(const) }, cmd)
     end
+
+    autoload "LocalCommand", "d2/commands/local_command"
 
     register :Cd,      'cd',      'd2/commands/cd'
     register :Clone,   'clone',   'd2/commands/clone'
