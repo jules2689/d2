@@ -8,8 +8,11 @@ module D2
         @params = params
       end
 
-      def call(_args, _name)
-        CLI::Kit::System.system(@params['run']) do |o, e|
+      def call(args, _name)
+        env = ENV.dup
+        env['LOCAL_COMMAND_ARGS'] = args.join(' ') if args
+
+        CLI::Kit::System.system(@params['run'], env: env) do |o, e|
           puts CLI::UI.fmt o if o
           puts CLI::UI.fmt e if e
           puts CLI::UI::Color::RESET.code
