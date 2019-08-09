@@ -18,6 +18,7 @@ module D2
 
   autoload(:EntryPoint, 'd2/entry_point')
   autoload(:Commands,   'd2/commands')
+  autoload(:Tasks,      'd2/tasks')
   autoload(:Registry,   'd2/registry')
 
   autocall(:Config)  { CLI::Kit::Config.new(tool_name: TOOL_NAME) }
@@ -75,6 +76,7 @@ module D2
   DATA_DIR = DataDir.new
 
   module Utils
+    autoload :Cacheable, 'd2/utils/cacheable'
     autoload :FirstRun,  'd2/utils/first_run'
     autoload :Formatter, 'd2/utils/formatter'
   end
@@ -82,6 +84,7 @@ module D2
   module Helpers
     autoload :Fzy,       'd2/helpers/fzy'
     autoload :Git,       'd2/helpers/git'
+    autoload :Homebrew,  'd2/helpers/homebrew'
   end
 
   class Command < CLI::Kit::BaseCommand

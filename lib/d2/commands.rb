@@ -16,5 +16,6 @@ module D2
     register :Config,  'config',  'd2/commands/config'
     register :Help,    'help',    'd2/commands/help'
     register :Open,    'open',    'd2/commands/open'
+    register :Up,      'up',      'd2/commands/up'
   end
 end
