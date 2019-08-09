@@ -16,6 +16,11 @@ module D2
       end
 
       class SimpleFormatter
+        def self.print(msg)
+          return if ENV['ENVIRONMENT'] == 'test'
+          print CLI::UI.fmt(msg)
+        end
+
         def self.info(msg)
           return if ENV['ENVIRONMENT'] == 'test'
           puts CLI::UI.fmt(msg)

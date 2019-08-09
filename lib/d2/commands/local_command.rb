@@ -9,6 +9,8 @@ module D2
       end
 
       def call(args, _name)
+        help and return true if args.include?("--help")
+
         require 'tempfile'
         require 'fileutils'
 
@@ -22,14 +24,20 @@ module D2
               if o
                 o.split("{{divider}}").each_with_index do |section, idx|
                   CLI::UI::Frame.divider(nil) unless idx == 0
-                  print CLI::UI.fmt section
+                  logger.print CLI::UI.fmt section
                 end
               end
-              print CLI::UI.fmt e if e
-              print CLI::UI::Color::RESET.code
+              logger.print CLI::UI.fmt e if e
+              logger.print CLI::UI::Color::RESET.code
             end
           end
         end
+      end
+
+      def help
+        msg = @params['help'] ? @params['help'] : "No help listed for #{@name}"
+        logger.info(msg)
+        true
       end
 
       def self.help
