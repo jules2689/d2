@@ -61,6 +61,19 @@ module D2
   # Use +D2::FILE_DESCRIPTOR.write("cd blah")+ to add to the file descriptor for evaluation in the parent.
   FILE_DESCRIPTOR = FileDescriptor.new
 
+
+  class DataDir
+    attr_accessor :path
+
+    def file(file)
+      require 'fileutils'
+      path = File.join(@path, file)
+      FileUtils.mkpath(File.dirname(path)) unless File.exist?(path)
+      path
+    end
+  end
+  DATA_DIR = DataDir.new
+
   module Utils
     autoload :FirstRun,  'd2/utils/first_run'
     autoload :Formatter, 'd2/utils/formatter'
