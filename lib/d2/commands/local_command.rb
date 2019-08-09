@@ -17,10 +17,17 @@ module D2
           file.rewind
           FileUtils.chmod("+x", file.path)
 
-          CLI::Kit::System.system(file.path, *args) do |o, e|
-            print CLI::UI.fmt o if o
-            print CLI::UI.fmt e if e
-            print CLI::UI::Color::RESET.code
+          CLI::UI::Frame.open("Running #{@name} command") do
+            CLI::Kit::System.system(file.path, *args) do |o, e|
+              if o
+                o.split("{{divider}}").each_with_index do |section, idx|
+                  CLI::UI::Frame.divider(nil) unless idx == 0
+                  print CLI::UI.fmt section
+                end
+              end
+              print CLI::UI.fmt e if e
+              print CLI::UI::Color::RESET.code
+            end
           end
         end
       end
