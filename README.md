@@ -6,7 +6,7 @@ WIP.
 
 ## How to Install?
 
-1. Add `source /path/to/d2/exe/d2.sh` to your `.bash_profile`, `.bashrc`, etc.
+1. Add `source /path/to/d2/exe/d2.sh` to your `.bash_profile`, `.bashrc`, `.zshrc`, etc.
 2. Restart your terminal.
 3. Run `d2 help` to see what is available.
 
