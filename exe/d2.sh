@@ -27,7 +27,7 @@ d2() {
   # This is the location of this currently executing file
   # This allows us to evaluate the `d2` ruby file
   # Once we have this, execute it
-  /usr/bin/ruby --disable-gems "$D2_SH_DIR/d2" "$FD_PATH" "$@"
+  /usr/bin/ruby --disable-gems "$D2_SH_DIR/d2" "$DATA_DIR" "$FD_PATH" "$@"
 
   # Finalize the process, evaluating the FD_PATH file (executes cd, changes env vars, etc)
   # Also remove the FD_PATH so as not to leak between runs
