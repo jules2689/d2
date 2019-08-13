@@ -16,10 +16,11 @@ module D2
           run("brew bundle")
         end
 
-        # TODO: Need to cache based on actually installed things?
         def bundle_check
-          Utils::Cacheable.cached_by_file('homebrew/bundle', 'Brewfile') do
-            CLI::Kit::System.capture2("brew bundle check").last.success?
+          Utils::Cacheable.cached_by_folder_contents('homebrew/bundle_folder', "/usr/local/Cellar") do
+            Utils::Cacheable.cached_by_file('homebrew/bundle_brewfile', 'Brewfile') do
+              CLI::Kit::System.capture2("brew bundle check").last.success?
+            end
           end
         end
 
