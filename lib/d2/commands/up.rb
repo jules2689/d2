@@ -7,8 +7,6 @@ module D2
       TaskFailed = Class.new(StandardError)
 
       def call(args, _name)
-        tasks = %w(homebrew)
-
         # Gather all task constants
         all_tasks = tasks.flat_map do |task|
           D2::Tasks.tasks(task).map { |t| t.new }
@@ -34,6 +32,23 @@ module D2
               break false
             end
           end
+        end
+      end
+
+      private
+
+      def tasks
+        return @tasks if @tasks
+
+        definition = D2::Project.new.definition
+        if definition && definition.key?('up')
+          @tasks = definition['up']
+        elsif definition
+          logger.info "The definition file for this project has no up section"
+          exit 1
+        else
+          logger.info "No {{info:d2.yml}} file found in the repository"
+          exit 1
         end
       end
 

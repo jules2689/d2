@@ -20,6 +20,7 @@ module D2
   autoload(:Commands,   'd2/commands')
   autoload(:Tasks,      'd2/tasks')
   autoload(:Registry,   'd2/registry')
+  autoload(:Project,    'd2/project')
 
   autocall(:Config)  { CLI::Kit::Config.new(tool_name: TOOL_NAME) }
 

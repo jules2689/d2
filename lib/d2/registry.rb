@@ -13,17 +13,7 @@ module D2
     end
 
     def local_commands
-      require 'yaml'
-      project_name = File.basename(Dir.pwd)
-      yaml_file = File.join(D2::CONFIG_PATH, 'commands', "#{project_name}.yml")
-      return {} unless File.exist?(yaml_file)
-      YAML.load_file(yaml_file)
-    rescue Psych::SyntaxError, SyntaxError => e
-      CLI::UI::Frame.open("SyntaxError in #{yaml_file}", color: :red) do
-        puts CLI::UI.fmt "The yaml file at {{info::#{yaml_file}}} may be misformatted as we got a syntax error"
-        puts e
-      end
-      return {}
+      @local_commands ||= D2::Project.new.definition['commands']
     end
 
     private

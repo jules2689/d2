@@ -17,10 +17,8 @@ module D2
         end
 
         def bundle_check
-          Utils::Cacheable.cached_by_folder_contents('homebrew/bundle_folder', "/usr/local/Cellar") do
-            Utils::Cacheable.cached_by_file('homebrew/bundle_brewfile', 'Brewfile') do
-              CLI::Kit::System.capture2("brew bundle check").last.success?
-            end
+          Utils::Cacheable.cache_by('homebrew/bundle', folder: "/usr/local/Cellar", file: "Brewfile") do
+            CLI::Kit::System.capture2("brew bundle check").last.success?
           end
         end
 
