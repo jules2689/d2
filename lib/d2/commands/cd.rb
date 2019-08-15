@@ -21,7 +21,7 @@ module D2
           )
 
           if options.empty?
-            logger.info "Nothing found for #{args.first}"
+            logger.info "Nothing found for '#{query}'"
             return
           end
           File.join(base_path, options.first)

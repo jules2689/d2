@@ -1,14 +1,28 @@
-#!/bin/bash
+#!/bin/sh
 
 # Export the directory to d2.sh here so that the shell function
 # can access the exe file anywhere in the system. If we didn't do this here,
 # BASH_SOURCE would constantly change as we moved around the system
-export D2_SH_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+#!/bin/sh
+if [ -n "$ZSH_VERSION" ]; then
+  export D2_SH_DIR="$( cd "$( dirname "${(%):-%N}" )" >/dev/null 2>&1 && pwd )"
 
-if [ "$(type -t dev)" != 'function' ]; then
-  dev(){
-    alias dev=d2
-  }
+  if [ "$(whence -w dev)" != 'dev: function' ]; then
+    dev(){
+      alias dev=d2
+    }
+  fi
+elif [ -n "$BASH_VERSION" ]; then
+  export D2_SH_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+  if [ "$(type -t dev)" != 'function' ]; then
+    dev(){
+      alias dev=d2
+    }
+  fi
+else
+  echo "Unknown shell. Exiting"
+  exit(1)
 fi
 
 d2() {
