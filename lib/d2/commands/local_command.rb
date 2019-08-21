@@ -22,6 +22,11 @@ module D2
         end
         command = @params['run'] if command.nil?
 
+        if params['exec']
+          exec(command, *args)
+          return
+        end
+
         CLI::UI::Frame.open("Running #{@name} command") do
           CLI::Kit::System.system(command, *args) do |o, e|
             if o
