@@ -22,7 +22,7 @@ elif [ -n "$BASH_VERSION" ]; then
   fi
 else
   echo "Unknown shell. Exiting"
-  exit(1)
+  exit 1
 fi
 
 d2() {
